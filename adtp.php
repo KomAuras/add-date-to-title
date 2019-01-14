@@ -12,9 +12,11 @@ add_filter('the_title', 'fix_title_name_after_period', 10, 2);
 function fix_title_name_after_period($title, $id)
 {
     $post = get_post($id);
-    $border_date = date("Y-m-d", strtotime("-1 months"));
-    if (get_the_date("Y-m-d", $post) < $border_date) {
-        return get_the_date("d-m-Y", $post) . " " . $title;
+    if ($post->post_type == 'post') {
+        $border_date = date("Y-m-d", strtotime("-1 months"));
+        if (get_the_date("Y-m-d", $post) < $border_date) {
+            return get_the_date("d-m-Y", $post) . " " . $title;
+        }
     }
     return $title;
 }
